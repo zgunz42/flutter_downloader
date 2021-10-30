@@ -122,11 +122,11 @@ public class FlutterDownloaderPlugin implements MethodCallHandler, FlutterPlugin
                                      boolean isResume, boolean requiresStorageNotLow, boolean saveInPublicStorage) {
         WorkRequest request = new OneTimeWorkRequest.Builder(DownloadWorker.class)
                 .setConstraints(new Constraints.Builder()
-                        .setRequiresStorageNotLow(requiresStorageNotLow)
+                        .setRequiresStorageNotLow(false)
                         .setRequiredNetworkType(NetworkType.CONNECTED)
                         .build())
                 .addTag(TAG)
-                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 20, TimeUnit.SECONDS)
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 10, TimeUnit.SECONDS)
                 .setInputData(new Data.Builder()
                         .putString(DownloadWorker.ARG_URL, url)
                         .putString(DownloadWorker.ARG_SAVED_DIR, savedDir)
